@@ -10,7 +10,7 @@ def createColorChecker(name:str):
     colors = np.clip(colors,0,255)
     colors = colors.astype(np.uint8)[:,::-1]
 
-    width = 300
+    width = 200
 
     shape = np.array([6,3])*width
     shape = shape[::-1]

@@ -75,9 +75,9 @@ class SVRCC(CorrectioAlgoritm):
         self.id = id
         
 
-        modelR = SVR(epsilon=0.001)
-        modelG = SVR(epsilon=0.001)
-        modelB = SVR(epsilon=0.001)
+        modelR = SVR(epsilon=0.001,degree=2,)
+        modelG = SVR(epsilon=0.001,degree=2,)
+        modelB = SVR(epsilon=0.001,degree=2,)
 
         modelR.fit(x, y[:,0])
         modelG.fit(x, y[:,1])

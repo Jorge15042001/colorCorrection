@@ -13,13 +13,13 @@ from colour_checker_detection import (
 from colour_checker_detection.detection.segmentation import (
     adjust_image)
 
-settings = {
+segmentationSettings = lambda c: {
         "adaptive_threshold_kwargs": {
             "maxValue": 255,
             "adaptiveMethod": cv2.ADAPTIVE_THRESH_MEAN_C,
             "thresholdType": cv2.THRESH_BINARY,
             "blockSize": int(1440 * 0.015) - int(1440 * 0.015) % 2 + 1,
-            "C": 10   ,
+            "C": c   ,
         }
     }
 
@@ -52,19 +52,19 @@ def findColors(images,settings=dict()):
             return np.array(swatch_colours[:18])
 
 
-#  path_images_halogena = glob.glob( os.path.join('./input8', 'halogenas',"*"))
-path_images_halogena = list(glob.glob( os.path.join('/home/jorge1504/Downloads', 'luzNormal.jpeg')))
-path_images_led = glob.glob( os.path.join('./input8', 'leds',"*"))
-path_images_haloled = glob.glob( os.path.join('./input8', 'haloleds',"*"))
+path_images_halogena = glob.glob( os.path.join('./input9', 'halogenas',"*"))
+#  path_images_halogena = list(glob.glob( os.path.join('/home/jorge1504/Downloads', 'luzNormal.jpeg')))
+path_images_led = glob.glob( os.path.join('./input9', 'leds',"*"))
+path_images_haloled = glob.glob( os.path.join('./input9', 'haloleds',"*"))
 
 imagenes_halogenas = [ (colour.io.read_image(path),path) for path in path_images_halogena ]
 imagenes_leds = [ (colour.io.read_image(path),path) for path in path_images_led ]
 imagenes_haloleds = [ (colour.io.read_image(path),path) for path in path_images_haloled ]
 
 
-Lab_tarjeta_halogena = findColors(imagenes_halogenas,settings)
-Lab_tarjeta_led = findColors(imagenes_leds)
-Lab_tarjeta_haloled = findColors(imagenes_haloleds)
+Lab_tarjeta_halogena = findColors(imagenes_halogenas,segmentationSettings(-3))
+Lab_tarjeta_led = findColors(imagenes_leds,segmentationSettings(-3))
+Lab_tarjeta_haloled = findColors(imagenes_haloleds,segmentationSettings(-3))
 
 np.savetxt("output/halogenas", Lab_tarjeta_halogena,fmt='%1.7f')
 np.savetxt("output/leds", Lab_tarjeta_led,fmt='%1.7f')

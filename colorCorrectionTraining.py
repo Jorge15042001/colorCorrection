@@ -5,8 +5,6 @@ import CA as ca
     
 if __name__  == "__main__":
 
-
-
     x_Holagena = np.loadtxt("./output/halogenas",dtype=np.float32)
     x_Led = np.loadtxt("./output/leds",dtype=np.float32)
     x_HaloLed = np.loadtxt("./output/haloleds",dtype=np.float32)
@@ -48,27 +46,25 @@ if __name__  == "__main__":
     svrcc_haloled.showError(x_HaloLed, expected)
     print()
 
-    #  tarjetaCorr = cv2.imread("random/test/halogenas.png")
-    #  tarjetareff = cv2.imread("random/test/reference.png")
-    tarjetaCorr = cv2.imread("/home/jorge1504/Downloads/colorful2.jpg")
+    tarjetaCorr = cv2.imread("random/test/halogenas.png")
+    tarjetareff = cv2.imread("random/test/reference.png")
+    tarjetaCorr = cv2.imread("random/test/franjas2.png")
     #  tarjetaCorr = cv2.imread("./input6/leds/led.png")
     #  tarjetaCorr = cv2.blur(tarjetaCorr,(3,3))
     tarjeta = tarjetaCorr.copy()
     tarjetaCorr = cv2.cvtColor(tarjetaCorr, cv2.COLOR_BGR2RGB)
-    #  tarjetaCorr = cv2.blur(tarjetaCorr,(31,31))
+    #  tarjetaCorr = cv2.GaussianBlur(tarjetaCorr,(101,101),0,0)
+    #  tarjetaCorr = cv2.blur(tarjetaCorr,(101,101))
     tarjetaCorr = tarjetaCorr/255
-    tarjetaCorr = lccHalogena.correctImage(tarjetaCorr)
+    tarjetaCorr = lccLed.correctImage(tarjetaCorr)
     tarjetaCorr = (tarjetaCorr * 255).astype(np.uint8)
     tarjetaCorr = cv2.cvtColor(tarjetaCorr, cv2.COLOR_RGB2BGR)
 
     cv2.imshow("corr",tarjetaCorr)
     cv2.imshow("origial",tarjeta)
-    #  cv2.imshow("ref",tarjetareff)
+    cv2.imshow("ref",tarjetareff)
     
     while True:
         k = cv2.waitKey(100) & 0xFF
         if k == 27:
             break
-
-
-
